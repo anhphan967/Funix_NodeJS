@@ -9,6 +9,7 @@ const http = require('http')
 const server = http.createServer((req, res) => {
     const url = req.url
     const method = req.method;
+    const body=req.body
     //change request
 
     if (url === '/') {
@@ -20,9 +21,20 @@ const server = http.createServer((req, res) => {
     }
     // change request 2
     if (url === '/message' && method === "POST") {
-        fs.writeFileSync('message.txt', 'dummy');
-        req.statusCode = 302
-        req.setHeader('Location', '/')
+        //read body
+        const body=[]
+        req.on('data', chunk =>{
+            console.log(chunk,1)
+            body.push(chunk)
+        })
+        req.on('end',()=>{
+            const parsedBody=Buffer.concat(body).toString();
+            const message=parsedBody.split('=')[1];
+            fs.writeFileSync('message.txt', message);
+         
+        } )
+        res.statusCode = 302
+        res.setHeader('Location', '/')
         return res.end()
     }
     res.setHeader('Content-Type', 'text/html')
