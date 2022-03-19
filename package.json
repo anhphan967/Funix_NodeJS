@@ -1,4 +1,7 @@
 {
+  "scripts": {
+    "start": "nodemon --inspect app.js"
+  },
   "dependencies": {
     "nodemon": "^2.0.15"
   }
