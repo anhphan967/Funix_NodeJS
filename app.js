@@ -8,6 +8,7 @@ app.use((res, rep, next)=>{
    next() // allow the request to continue the next midleware in line
 })
 app.use((res, rep, next)=>{
+   rep.send('<h1>hello</h1>')
    console.log('in first midleware 2')
    //
 })
