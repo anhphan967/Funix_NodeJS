@@ -2,19 +2,25 @@ const http = require('http')
 //install express
 const express = require('express')
 const app= express()
+//body post
+app.use(express.urlencoded())
 // midleware 
-app.use((res, rep, next)=>{
+app.use((req, res, next)=>{
    console.log('allways run')
    next() // allow the request to continue the next midleware in line
 })
-app.use('/add-product',(res, rep, next)=>{
-   rep.send('<h1>The Add product page</h1>')   
+app.use('/add-product',(req, res, next)=>{
+   res.send('<form action="/product" method="POST"><input type="text" name="tittle"/><button>Submit</button></form>')   
    next()
-   //
+   
 })
-app.use('/',(res, rep, next)=>{
-   rep.send('<h1>Hello from Express.js</h1>')   
-   //
-})
+app.use('/product',(req, res, next)=>{
+   console.log(req.body)
+   res.redirect('/')
+   }) 
+app.use('/',(req, res, next)=>{
+   res.send('<h1>Hello from Express.js</h1>')   
+   next()
+})  
 const server = http.createServer(app)
 server.listen(3000)
