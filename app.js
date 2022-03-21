@@ -2,11 +2,15 @@ const http = require('http')
 const adminRouter= require('./routers/admin')
 const shopRouter=require('./routers/shop')
 const path= require('path')
+const rootDir= require('./util/path')
+
 //install express
 const express = require('express')
 const app= express()
 //body post
 app.use(express.urlencoded())
+//use static
+app.use(express.static(path.join(rootDir,'public')))
 
 app.use('/admin',adminRouter)
 app.use(shopRouter)
