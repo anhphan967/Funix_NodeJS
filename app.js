@@ -18,7 +18,7 @@ app.set('views', 'views');
 app.use('/admin',adminRouter.router)
 app.use(shopRouter)
 app.use((req,res,next)=>{
-   res.status(404).render('404')
+   res.status(404).render('404',{pageType:'Page not found'})
 })
  
 const server = http.createServer(app)
