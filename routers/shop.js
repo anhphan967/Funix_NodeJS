@@ -12,7 +12,7 @@ router.get('/',(req, res, next)=>{
         path:'/',
         prodsLength: product.length >0,
         activeShop:true,
-        shopCSS:true
+        productCSS:true
     })
     //res.sendFile(path.join(__dirname, '../','views','shop.html'))     
  }) 
