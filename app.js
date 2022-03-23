@@ -19,11 +19,13 @@ app.use(express.static(path.join(rootDir,'public')))
 //handlerbars
 
 app.engine('hbs',expressHbs.engine({
-   extname: '.hbs'
+   extname: '.hbs',
+   layoutsDir:'views/layouts/',
+   defaultLayout:'main-layout'
  })
 )
 app.set('view engine', 'hbs');
-app.set('views', path.join(rootDir,'views'));
+app.set('views', 'views');
 
 app.use('/admin',adminRouter.router)
 app.use(shopRouter)
