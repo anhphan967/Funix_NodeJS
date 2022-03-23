@@ -11,6 +11,9 @@ const app= express()
 app.use(express.urlencoded())
 //use static
 app.use(express.static(path.join(rootDir,'public')))
+//pug
+app.set('view engine', 'pug');
+app.set('views', 'views');
 
 app.use('/admin',adminRouter.router)
 app.use(shopRouter)
