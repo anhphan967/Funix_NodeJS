@@ -3,17 +3,27 @@ const adminRouter= require('./routers/admin')
 const shopRouter=require('./routers/shop')
 const path= require('path')
 const rootDir= require('./util/path')
-
+const expressHbs =require('express-handlebars');
 //install express
 const express = require('express')
 const app= express()
 //body post
 app.use(express.urlencoded())
 //use static
-app.use(express.static(path.join(rootDir,'public')))
+app.use(express.static(path.join(rootDir,'public')))  
+
 //pug
-app.set('view engine', 'pug');
-app.set('views', 'views');
+//app.set('view engine', 'pug');
+//app.set('views', 'views');
+
+//handlerbars
+
+app.engine('hbs',expressHbs.engine({
+   extname: '.hbs'
+ })
+)
+app.set('view engine', 'hbs');
+app.set('views', path.join(rootDir,'views'));
 
 app.use('/admin',adminRouter.router)
 app.use(shopRouter)
