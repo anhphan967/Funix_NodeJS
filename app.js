@@ -4,6 +4,7 @@ const shopRouter=require('./routers/shop')
 const errorController= require('./controllers/error')
 const path= require('path')
 const rootDir= require('./util/path')
+const morgan = require('morgan')
 
 //const expressHbs =require('express-handlebars');
 //install express
@@ -13,7 +14,8 @@ const app= express()
 app.use(express.urlencoded())
 //use static
 app.use(express.static(path.join(rootDir,'public')))  
-
+//morgan
+app.use(morgan('combined'))
 //pug
 //app.set('view engine', 'pug');
 //app.set('views', 'views');

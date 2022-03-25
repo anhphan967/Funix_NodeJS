@@ -1,4 +1,4 @@
-   const products=[] 
+  const Product=require('../model/product')
     
     exports.getAddProduct=(req, res, next)=>{
         res.render('add-product',
@@ -8,14 +8,16 @@
         productCSS:true
     })   
     }
-    //
+    
     
     exports.postAddProduct=(req, res, next)=>{                
-        products.push({title:req.body.title})   
+        const product= new Product(req.body.title)
+        product.save();                  
         res.redirect('/')
         }
 
-    exports.getProduct=(req, res, next)=>{             
+    exports.getProduct=(req, res, next)=>{
+        const products= Product.fetchAll()             
         res.render('shop',
             {prods:products, 
             pageType:'Shop', 
