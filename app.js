@@ -1,8 +1,10 @@
 const http = require('http')
 const adminRouter= require('./routers/admin')
 const shopRouter=require('./routers/shop')
+const errorController= require('./controllers/error')
 const path= require('path')
 const rootDir= require('./util/path')
+
 //const expressHbs =require('express-handlebars');
 //install express
 const express = require('express')
@@ -34,9 +36,7 @@ app.set('views', 'views');
 
 app.use('/admin',adminRouter)
 app.use(shopRouter)
-app.use((req,res,next)=>{
-   res.status(404).render('404',{pageType:'Page not found', path:''})
-})
+app.use(errorController.error)
  
 const server = http.createServer(app)
 server.listen(3000)
