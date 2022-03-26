@@ -7,27 +7,28 @@ module.exports = class Product {
     }
 
     save() {
-        const linkData= path.join(path.dirname(require.main.filename),'data','products.json')
-        fs.readFile(linkData,(err, fileContent)=>{
-            let products = []; 
-            if(!err){
-                products=JSON.parse(fileContent)
+        const p= path.join(path.dirname(require.main.filename),'data','products.json')
+        console.log(path.join(path.dirname(require.main.filename),'data','products.json'))
+        fs.readFile(p, (err, fileContent) => {
+            let products = [];
+            if (!err) {
+              products = JSON.parse(fileContent);
             }
             products.push(this);
-            fs.writeFile(linkData, JSON.stringify(products), err =>{
-                console.log(err)
-            })
-        })        
-    }
-
-    static fetchAll(cb) {
-        const linkData= path.join(path.dirname(require.main.filename),'data','products.json')
-             
-            fs.readFile(linkData, (err, fileContent) => {
-                if (err) {
-                  return []
-                }
-                return (JSON.parse(fileContent));
-              });      
-    }
-}
+            fs.writeFile(p, JSON.stringify(products), err => {
+              console.log(err);
+            });
+          });
+        }
+      
+        static fetchAll(cb) {
+            const p= path.join(path.dirname(require.main.filename),'data','products.json')
+          fs.readFile(p, (err, fileContent) => {
+            if (err) {
+              cb([]);
+            }
+            cb(JSON.parse(fileContent));
+          });
+        }
+      };
+      

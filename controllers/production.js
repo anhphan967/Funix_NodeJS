@@ -17,14 +17,16 @@
         }
 
     exports.getProduct=(req, res, next)=>{
-        const products= Product.fetchAll()             
-        res.render('shop',
+        Product.fetchAll((products)=>{ 
+             res.render('shop',
             {prods:products, 
             pageType:'Shop', 
             path:'/',
             prodsLength: products.length >0,
             activeShop:true,
             productCSS:true
-        })       
+        })  
+        })                
+           
      }        
     
