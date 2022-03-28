@@ -18,15 +18,14 @@ const getProductsFromFile = cb => {
 };
 
 module.exports = class Product {
-  constructor(title, imageUrl, description, price) {
+  constructor(id, title, imageUrl, description, price) {
     this.id=id
     this.title = title;
     this.imageUrl = imageUrl;
     this.description = description;
     this.price = price;
   }
-  save() {
-    this.id=Math.random().toString();
+  save() {   
     getProductsFromFile( ( products ) =>
     {
       if ( this.id )
@@ -58,4 +57,14 @@ module.exports = class Product {
       cb(product)     
     })
   }
+
+  static deleteById ( id )
+  {
+    const updatedProducts = products.filter( prod => prod.id !== id )
+    fs.writeFile( p, JSON.stringify( updatedProducts ), err =>
+    {
+      console.log(err)
+    })
+  }
+
 };
