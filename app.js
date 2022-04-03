@@ -2,16 +2,13 @@ const path = require("path");
 const express = require("express");
 const bodyParser = require("body-parser");
 const sequelize = require("./util/database");
-
+const errorController = require("./controllers/error");
 const Product = require("./models/product");
 const User = require("./models/user");
 const Cart = require("./models/cart");
 const CartItem = require("./models/cart-item");
 const Order = require("./models/order");
 const OrderItem = require("./models/order-item");
-
-
-const errorController = require("./controllers/error");
 
 const app = express();
 
@@ -36,6 +33,7 @@ app.use((req, res, next) => {
 
 app.use("/admin", adminRoutes);
 app.use(shopRoutes);
+
 app.use(errorController.get404);
 
 Product.belongsTo(User, { constraint: true, onDelete: "CASCADE" });
@@ -49,15 +47,14 @@ User.hasMany(Order);
 Order.belongsToMany(Product, { through: OrderItem });
 
 sequelize
-//.sync({force:true})
+  // .sync({ force: true })
   .sync()
-
   .then((result) => {
     return User.findByPk(1);
   })
   .then((user) => {
     if (!user) {
-      return User.create({ name: "tuan", email: "tuan123@gmail.com" });
+      return User.create({ name: "Dat", email: "dattran306@gmail.com" });
     }
     return user;
   })
