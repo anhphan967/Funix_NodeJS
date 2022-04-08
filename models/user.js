@@ -9,11 +9,18 @@ class User{
   save(){
     const db= getDb();
     return db.collection('user').insertOne(this)
-    
+
   }
-  static findById(prodId){
+  static findById(userId){
     const db= getDb();
-    return db.collection('user').findOne({ _id: new mongodb.ObjectId(prodId)})
+    return db
+      .collection("users")
+      .findOne({ _id: new ObjectId(userId) })
+      .then((user) => {
+        console.log(user);
+        return user;
+      })
+      .catch((err) => console.log(err));
   }
 }
 module.exports = User;
