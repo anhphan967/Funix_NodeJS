@@ -16,7 +16,7 @@ exports.postAddProduct = (req, res, next) => {
   const product = new Product(title, price, imageUrl, description);
   product
     .save()
-    .then((result) => {
+    .then(() => {
       console.log("Created");
       res.redirect("/admin/products");
     })
