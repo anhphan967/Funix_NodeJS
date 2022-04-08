@@ -13,13 +13,13 @@ class User{
 
   }
 
-  addCart(product){
-    const updatedCart={ item: {...product, quantity:1}}
+  static addCart(product){
+    const updatedCart={ item: [{ _id: new mongodb.ObjectId(this._id) , quantity:1}]}
     const db=getDb()
     return db
           .collection("users")
           .updateOne(
-            { _id: new mongodb.ObjectId(this._id=id)},
+            { _id: new mongodb.ObjectId(this._id)},
             {$set:{cart:item}})
   }
 
