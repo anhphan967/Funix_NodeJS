@@ -1,8 +1,15 @@
-const Sequelize = require("sequelize");
+const mongodb = require("mongodb");
 
-const sequelize = new Sequelize("nodejs", "root", "batho123", {
-  dialect: "mysql",
-  host: "localhost",
-});
+const MongoClient = mongodb.MongoClient;
 
-module.exports = sequelize;
+const MongoConnect= callback=>{
+  MongoClient.connect('mongodb+srv://nodejs:batho123@cluster0.ipyxs.mongodb.net/myFirstDatabase?retryWrites=true&w=majoritys')
+  .then(result=>{ 
+    console.log(result),
+    callback(result)
+    })
+  .catch(err=>{console.log(err)}
+    );
+}
+
+module.exports =MongoConnect
