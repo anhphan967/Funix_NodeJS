@@ -23,4 +23,4 @@ const getDb=()=>{
 }
 
 exports.mongoConnect =MongoConnect
-exprots.getDb=getDb
+exports.getDb=getDb
