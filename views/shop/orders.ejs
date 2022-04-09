@@ -9,18 +9,18 @@
             <% } else { %>
                 <ul>
                     <% orders.forEach(order=>{ %>
-                    <li>
-                        <h1># <%= order.id %></h1>
-                            <ul>
-                                <% order.products.forEach(product =>{ %>
-                                    <li>
-                                        <%= product.title %> - <%= product.orderItem.quantity %>
-                                    </li>
-                                <% }) %>
-                            </ul>
-                    </li>
+                        <li class="order__items">
+                            <h1># <%= order._id %></h1>
+                                <ul class="orders_products">
+                                    <% order.items.forEach(product =>{ %>
+                                        <li class="order__products-item">
+                                            <%= product.title %> - <%= product.quantity %>
+                                        </li>
+                                    <% }) %>
+                                </ul>
+                         </li>           
                     <% }) %>
                 </ul>
-            <% } %>
+            <% } %>            
         </main>
         <%- include('../includes/end.ejs') %>
