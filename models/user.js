@@ -53,8 +53,7 @@ class User {
         products.map((p) => {              
           return {
             ...p,
-            quantity: this.cart.items.find((i) => {
-              console.log('i:'+i)
+            quantity: this.cart.items.find((i) => {              
               return i.productId.toString() === p._id.toString();
             }).quantity,
           };
