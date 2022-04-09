@@ -1,6 +1,7 @@
 const mongodb = require("mongodb");
 const getDb = require("../util/database").getDb;
 const ObjectId = mongodb.ObjectId;
+const { get } = require("express/lib/response");
 
 class User {
   constructor(username, email, cart, id) {
@@ -41,14 +42,32 @@ class User {
         { $set: { cart: updatedCart } }
       );
   }
+  getCart() {
+    const db = getDb();
+    const productIds = this.cart.items.map((i) => i.productId);   
+    return db
+      .collection("products")
+      .find({ _id: { $in: productIds } })
+      .toArray()
+      .then((products) =>
+        products.map((p) => {              
+          return {
+            ...p,
+            quantity: this.cart.items.find((i) => {
+              console.log('i:'+i)
+              return i.productId.toString() === p._id.toString();
+            }).quantity,
+          };
+        })
+      );
+  }
 
   static findById(userId) {
     const db = getDb();
     return db
       .collection("users")
       .findOne({ _id: new ObjectId(userId) })
-      .then((user) => {
-        console.log(user);
+      .then((user) => {       
         return user;
       })
       .catch((err) => console.log(err));
