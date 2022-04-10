@@ -19,7 +19,7 @@ const productSchema =new Schema ({
     required: true
   }
 })
-  
+module.exports = mongoose.model('Products', productSchema )
 // const mongodb = require("mongodb");
 // const getDb = require("../util/database").getDb;
 
