@@ -1,5 +1,5 @@
 const path = require('path');
-
+const session= require('express-session')
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
@@ -28,11 +28,15 @@ app.use((req, res, next) => {
     .catch(err => console.log(err));
 });
 
+app.use(
+  session({ secret: 'my secret', resave: false, saveUninitialized: false }))
+
 app.use('/admin', adminRoutes);
 app.use(shopRoutes);
 app.use(authRoutes);
 
 app.use(errorController.get404);
+
 
 mongoose 
   .connect(
