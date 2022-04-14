@@ -3,11 +3,17 @@ const session= require('express-session')
 const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
+var MongoDBStore = require('connect-mongodb-session')(session);
 
 const errorController = require('./controllers/error');
 const User = require('./models/user');
 
 const app = express();
+const uriUrl= 'mongodb+srv://nodejs:batho123@cluster0.ipyxs.mongodb.net/shop'
+const store = new MongoDBStore({
+  uri: uriUrl,
+  collection: 'Sessions'  
+});
 
 app.set('view engine', 'ejs');
 app.set('views', 'views');
@@ -29,7 +35,9 @@ app.use((req, res, next) => {
 });
 
 app.use(
-  session({ secret: 'my secret', resave: false, saveUninitialized: false }))
+  session(
+    { secret: 'my secret', resave: false, saveUninitialized: false, store:store }
+    ))
 
 app.use('/admin', adminRoutes);
 app.use(shopRoutes);
@@ -39,9 +47,7 @@ app.use(errorController.get404);
 
 
 mongoose 
-  .connect(
-    'mongodb+srv://nodejs:batho123@cluster0.ipyxs.mongodb.net/shop?retryWrites=true&w=majority'
-  )
+  .connect( uriUrl )
   .then(result => {
     User.findOne().then(user => {
       if (!user) {
