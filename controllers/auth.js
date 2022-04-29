@@ -46,16 +46,18 @@ exports.postSignup=(req, res, next)=>{
     if(userDoc){
       return res.redirect('/login')
     }
-    return bcryptjs.hash(password,12)   
-  })
-  .then(hashPass=>{
+    return bcryptjs
+    .hash(password,12)
+    .then(hashPass=>{
     const user = new User({
       email:email,
       password: hashPass,
       cart:{items:[]}
     })
     user.save()
+    })   
   })
+  
   .then( result=> {res.redirect('/login')}  )
   .catch(err=>console.log(err))
 }
