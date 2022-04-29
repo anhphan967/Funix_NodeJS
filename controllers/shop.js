@@ -9,7 +9,7 @@ exports.getProducts = (req, res, next) => {
         prods: products,
         pageTitle: 'All Products',
         path: '/products',
-       isAuthenticated:req.session.isLoggedIn
+        isAuthenticated: req.session.isLoggedIn
       });
     })
     .catch(err => {
@@ -24,8 +24,8 @@ exports.getProduct = (req, res, next) => {
       res.render('shop/product-detail', {
         product: product,
         pageTitle: product.title,
-        path: '/products', 
-       isAuthenticated:req.session.isLoggedIn
+        path: '/products',
+        isAuthenticated: req.session.isLoggedIn
       });
     })
     .catch(err => console.log(err));
@@ -37,9 +37,7 @@ exports.getIndex = (req, res, next) => {
       res.render('shop/index', {
         prods: products,
         pageTitle: 'Shop',
-        path: '/', 
-       isAuthenticated:req.session.isLoggedIn,
-       csrfToken: req.csrfToken()
+        path: '/'
       });
     })
     .catch(err => {
@@ -49,14 +47,14 @@ exports.getIndex = (req, res, next) => {
 
 exports.getCart = (req, res, next) => {
   req.user
-    .populate(['cart.items.productId'])    
+  .populate(['cart.items.productId'])    
     .then(user => {
       const products = user.cart.items;
       res.render('shop/cart', {
         path: '/cart',
         pageTitle: 'Your Cart',
         products: products,
-       isAuthenticated:req.session.isLoggedIn
+        isAuthenticated: req.session.isLoggedIn
       });
     })
     .catch(err => console.log(err));
@@ -86,7 +84,7 @@ exports.postCartDeleteProduct = (req, res, next) => {
 
 exports.postOrder = (req, res, next) => {
   req.user
-    .populate(['cart.items.productId'])    
+  .populate(['cart.items.productId']) 
     .then(user => {
       const products = user.cart.items.map(i => {
         return { quantity: i.quantity, product: { ...i.productId._doc } };
@@ -116,7 +114,7 @@ exports.getOrders = (req, res, next) => {
         path: '/orders',
         pageTitle: 'Your Orders',
         orders: orders,
-       isAuthenticated:req.session.isLoggedIn
+        isAuthenticated: req.session.isLoggedIn
       });
     })
     .catch(err => console.log(err));
