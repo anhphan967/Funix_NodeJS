@@ -35,13 +35,13 @@ exports.postAddProduct = (req, res, next) => {
         price: price,
         description: description
       },
-      errorMessage: errors.array()[0].msg,
+      errorMessage: errors.array()[0].msg
       validationErrors: errors.array()
     });
   }
 
   const product = new Product({
-    _id:mongoose.Types.ObjectId('6257f413b76ef29589d17256'),
+    //_id:mongoose.Types.ObjectId('6257f413b76ef29589d17256'),
     title: title,
     price: price,
     description: description,
@@ -74,7 +74,6 @@ exports.postAddProduct = (req, res, next) => {
       const error= new Error(err)
       error.httpStatusCode=500
       return next(err)
-
     });
 };
 
@@ -85,8 +84,7 @@ exports.getEditProduct = (req, res, next) => {
   }
   const prodId = req.params.productId;
   Product.findById(prodId)
-    .then(product => {
-      throw new Error('dummy')
+    .then(product => {      t
       if (!product) {
         return res.redirect('/');
       }
@@ -100,7 +98,11 @@ exports.getEditProduct = (req, res, next) => {
         validationErrors: []
       });
     })
-    .catch(err => console.log(err));
+    .catch(err => {     
+      const error= new Error(err)
+      error.httpStatusCode=500
+      return next(err)
+    });
 };
 
 exports.postEditProduct = (req, res, next) => {
@@ -144,7 +146,11 @@ exports.postEditProduct = (req, res, next) => {
         res.redirect('/admin/products');
       });
     })
-    .catch(err => console.log(err));
+    .catch(err => {     
+      const error= new Error(err)
+      error.httpStatusCode=500
+      return next(err)
+    });
 };
 
 exports.getProducts = (req, res, next) => {
@@ -159,7 +165,11 @@ exports.getProducts = (req, res, next) => {
         path: '/admin/products'
       });
     })
-    .catch(err => console.log(err));
+    .catch(err => {     
+      const error= new Error(err)
+      error.httpStatusCode=500
+      return next(err)
+    });
 };
 
 exports.postDeleteProduct = (req, res, next) => {
@@ -169,5 +179,9 @@ exports.postDeleteProduct = (req, res, next) => {
       console.log('DESTROYED PRODUCT');
       res.redirect('/admin/products');
     })
-    .catch(err => console.log(err));
+    .catch(err => {     
+      const error= new Error(err)
+      error.httpStatusCode=500
+      return next(err)
+    });
 };
