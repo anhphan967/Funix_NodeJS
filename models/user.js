@@ -20,7 +20,8 @@ const userSchema = new Schema({
           required: true
         },
         quantity: { type: Number, required: true }
-      }
+      },
+      
     ]
   }
 });
