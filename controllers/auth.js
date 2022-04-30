@@ -33,7 +33,8 @@ exports.getSignup = (req, res, next) => {
       password:'',
         email: '',
         confirmPassword: ''            
-    }       
+    },
+    validationErrors:[]       
   });
 };
 
@@ -72,7 +73,8 @@ exports.postSignup = (req, res, next) => {
   const confirmPassword = req.body.confirmPassword;
   
   const erros= validationResult(req)
-  if(!erros.isEmpty()){    
+  if(!erros.isEmpty()){   
+    console.log(erros.array()) 
     return res.status(422).render('auth/signup', {
       path: '/signup',
       pageTitle: 'Signup',
@@ -81,7 +83,8 @@ exports.postSignup = (req, res, next) => {
         password:password,
         email: email,
         confirmPassword: req.body.confirmPassword
-      }       
+      },
+       validationErrors:erros.array()      
     })
   }
  
