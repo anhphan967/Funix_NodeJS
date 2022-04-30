@@ -35,7 +35,7 @@ exports.postAddProduct = (req, res, next) => {
         price: price,
         description: description
       },
-      errorMessage: errors.array()[0].msg
+      errorMessage: errors.array()[0].msg,
       validationErrors: errors.array()
     });
   }
@@ -84,7 +84,7 @@ exports.getEditProduct = (req, res, next) => {
   }
   const prodId = req.params.productId;
   Product.findById(prodId)
-    .then(product => {      t
+    .then(product => {      
       if (!product) {
         return res.redirect('/');
       }
