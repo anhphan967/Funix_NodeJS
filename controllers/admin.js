@@ -131,7 +131,22 @@ exports.postEditProduct = (req, res, next) => {
   const updatedDesc = req.body.description;
 
   const errors = validationResult(req);
-
+  if (!image) {
+    return res.status(422).render('admin/edit-product', {
+      pageTitle: 'Edit Product',
+      path: '/admin/edit-product',
+      editing: true,
+      hasError: true,
+      product: {
+        title: updatedTitle,        
+        price: updatedPrice,
+        description: updatedDesc,
+        _id: prodId
+      },
+      errorMessage: 'Attached file is not an image.',
+      validationErrors: []
+  });
+  }
   if (!errors.isEmpty()) {
     return res.status(422).render('admin/edit-product', {
       pageTitle: 'Edit Product',
